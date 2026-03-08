@@ -26,7 +26,7 @@ const distube = new DisTube(client, {
     ],
 });
 
-client.on('ready', () => {
+client.on('clientReady', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
