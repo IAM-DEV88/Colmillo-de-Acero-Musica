@@ -3,7 +3,7 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require('@distube/spotify');
 const { YtDlpPlugin } = require('@distube/yt-dlp');
-const express = require('express');
+const ffmpeg = require('ffmpeg-static');
 
 const app = express();
 app.get('/', (req, res) => res.send('Bot is online!'));
@@ -19,6 +19,9 @@ const client = new Client({
 });
 
 const distube = new DisTube(client, {
+    ffmpeg: {
+        path: ffmpeg,
+    },
     emitNewSongOnly: true,
     plugins: [
         new SpotifyPlugin(),
