@@ -24,6 +24,8 @@ const distube = new DisTube(client, {
         path: ffmpeg,
     },
     emitNewSongOnly: true,
+    leaveOnEmpty: true,
+    leaveOnFinish: false,
     plugins: [
         new SpotifyPlugin(),
         new YtDlpPlugin(),
@@ -54,6 +56,9 @@ client.on('messageCreate', async (message) => {
                 message,
                 textChannel: message.channel,
                 member: message.member,
+                skip: false,
+                unshift: false,
+                selfDeaf: true,
             });
         } catch (error) {
             console.error(error);
