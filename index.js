@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require('@distube/spotify');
-const { YouTubeDLPlugin } = require('@distube/yt-dlp');
+const { YtDlpPlugin } = require('@distube/yt-dlp');
 const express = require('express');
 
 const app = express();
@@ -25,7 +25,7 @@ const distube = new DisTube(client, {
     emitAddListWhenCreatingQueue: false,
     plugins: [
         new SpotifyPlugin(),
-        new YouTubeDLPlugin(),
+        new YtDlpPlugin(),
     ],
 });
 
