@@ -24,9 +24,7 @@ const distube = new DisTube(client, {
     emitAddSongWhenCreatingQueue: false,
     emitAddListWhenCreatingQueue: false,
     plugins: [
-        new SpotifyPlugin({
-            emitEventsAfterFetching: true,
-        }),
+        new SpotifyPlugin(),
         new YouTubeDLPlugin(),
     ],
 });
