@@ -3,6 +3,11 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const { DisTube } = require('distube');
 const { SpotifyPlugin } = require('@distube/spotify');
 const { YouTubeDLPlugin } = require('@distube/yt-dlp');
+const express = require('express');
+
+const app = express();
+app.get('/', (req, res) => res.send('Bot is online!'));
+app.listen(3000, () => console.log('Server is ready!'));
 
 const client = new Client({
     intents: [

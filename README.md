@@ -26,15 +26,14 @@ Un bot de música para Discord que soporta Spotify y YouTube, listo para ser des
 - `!leave`: Alias de stop.
 - `!queue`: Muestra la cola de reproducción actual.
 
-## Despliegue en Heroku
-1. Crea una nueva aplicación en Heroku.
-2. Conecta tu repositorio de GitHub o usa el Heroku CLI para subir el código.
-3. En la pestaña **Settings** > **Config Vars**, añade:
+## Despliegue en Replit
+1. Crea un nuevo **Repl** e importa tu repositorio de GitHub.
+2. En la pestaña **Secrets** (icono de candado), añade:
    - `DISCORD_TOKEN`: Tu token de bot.
-4. En la pestaña **Resources**, asegúrate de que el `worker` (especificado en el `Procfile`) esté activado.
-5. **Importante**: Asegúrate de añadir el Buildpack de FFmpeg en Heroku:
-   - Ve a Settings > Buildpacks.
-   - Añade `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`.
+3. El bot iniciará automáticamente un servidor web en el puerto 3000.
+4. Para mantenerlo activo 24/7 (si no usas Replit Hacker):
+   - Usa un servicio externo como [UptimeRobot](https://uptimerobot.com/).
+   - Crea un monitor HTTP que apunte a la URL de tu Repl (ej. `https://nombre-del-repl.usuario.repl.co`).
 
 ## Créditos
-Desarrollado con `discord.js` y `distube`.
+Desarrollado con `discord.js`, `distube` y `express`.
