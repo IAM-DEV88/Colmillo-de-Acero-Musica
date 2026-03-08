@@ -53,7 +53,7 @@ client.on('messageCreate', async (message) => {
             });
         } catch (error) {
             console.error(error);
-            message.channel.send('An error occurred while trying to play the song.');
+            message.channel.send(`❌ | An error occurred: \`${error.message}\``);
         }
     }
 
