@@ -24,8 +24,6 @@ const distube = new DisTube(client, {
         path: ffmpeg,
     },
     emitNewSongOnly: true,
-    leaveOnEmpty: true,
-    leaveOnFinish: false,
     plugins: [
         new SpotifyPlugin(),
         new YtDlpPlugin(),
@@ -53,12 +51,9 @@ client.on('messageCreate', async (message) => {
 
         try {
             await distube.play(voiceChannel, query, {
-                message,
                 textChannel: message.channel,
                 member: message.member,
-                skip: false,
-                unshift: false,
-                selfDeaf: true,
+                metadata: { message },
             });
         } catch (error) {
             console.error(error);
@@ -67,13 +62,13 @@ client.on('messageCreate', async (message) => {
     }
 
     if (command === 'stop' || command === 'leave') {
-        distube.stop(message);
+        distube.stop(message.guild);
         message.channel.send('Stopped the music and left the voice channel.');
     }
 
     if (command === 'skip') {
         try {
-            await distube.skip(message);
+            await distube.skip(message.guild);
             message.channel.send('Skipped the song.');
         } catch (error) {
             message.channel.send('There is no song to skip!');
@@ -81,7 +76,7 @@ client.on('messageCreate', async (message) => {
     }
 
     if (command === 'queue') {
-        const queue = distube.getQueue(message);
+        const queue = distube.getQueue(message.guildId);
         if (!queue) return message.channel.send('The queue is empty.');
         const q = queue.songs
             .map((song, i) => `${i === 0 ? 'Playing:' : `${i}.`} ${song.name} - \`${song.formattedDuration}\``)
@@ -90,7 +85,7 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-// DisTube events
+// DisTube v5 events
 distube
     .on('playSong', (queue, song) =>
         queue.textChannel.send(`🎶 | Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}`)
@@ -98,12 +93,13 @@ distube
     .on('addSong', (queue, song) =>
         queue.textChannel.send(`✅ | Added \`${song.name}\` - \`${song.formattedDuration}\` to the queue by ${song.user}`)
     )
-    .on('error', (channel, e) => {
-        if (channel) channel.send(`❌ | An error encountered: ${e.toString().slice(0, 1974)}`);
-        else console.error(e);
+    .on('error', (error, queue) => {
+        console.error(error);
+        if (queue && queue.textChannel)
+            queue.textChannel.send(`❌ | An error encountered: ${error.toString().slice(0, 1974)}`);
     })
-    .on('empty', (channel) => channel.send('Voice channel is empty! Leaving the channel...'))
-    .on('searchNoResult', (message, query) => message.channel.send(`❌ | No result found for \`${query}\`!`))
+    .on('empty', (queue) => queue.textChannel.send('Voice channel is empty! Leaving the channel...'))
+    .on('searchNoResult', (query, message) => message.channel.send(`❌ | No result found for \`${query}\`!`))
     .on('finish', (queue) => queue.textChannel.send('Finished!'));
 
 client.login(process.env.DISCORD_TOKEN);
