@@ -7,10 +7,22 @@ Un bot de música para Discord que soporta Spotify y YouTube, listo para ser des
 - Comandos básicos: `!play`, `!skip`, `!stop`, `!queue`.
 - Configuración para Heroku incluida.
 
-## Requisitos
-- Node.js (v16 o superior).
-- Un bot de Discord creado en el [Discord Developer Portal](https://discord.com/developers/applications).
-- FFmpeg instalado (el bot usa `ffmpeg-static` por defecto).
+## Configuración Crítica (Discord Developer Portal)
+Para que el bot pueda leer tus comandos (como `!play`), debes activar los **Intents** en el portal de desarrolladores:
+1. Ve a [Discord Developer Portal](https://discord.com/developers/applications).
+2. Selecciona tu aplicación y ve a la pestaña **Bot**.
+3. Baja hasta **Privileged Gateway Intents**.
+4. Activa **Message Content Intent** (¡Muy importante!).
+5. Guarda los cambios.
+
+## Canales Privados y Permisos
+Si el canal de texto es privado, el bot no podrá leer mensajes a menos que lo configures:
+1. **Añadir al bot**: Ve a los ajustes del canal privado > Permisos > Añadir miembros > Selecciona a tu bot.
+2. **Permisos necesarios** en ese canal:
+   - Ver canal (View Channel).
+   - Enviar mensajes (Send Messages).
+   - Leer historial de mensajes (Read Message History).
+   - Conectar y Hablar (en el canal de voz).
 
 ## Instalación Local
 1. Clona este repositorio o descarga los archivos.
